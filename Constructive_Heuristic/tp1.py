@@ -168,13 +168,19 @@ def read_tsp_file(file_name):
     file.close()
     return tsp,hub
 
-if __name__ == "__main__":
-    start_time = time.time()
+def get_tsp_path_cost():
     file_name = sys.argv[1]
     tsp, hub = read_tsp_file(file_name)
     save = calculate_savings(tsp, hub)
     route = calc_tsp(tsp, save)
-    print("Rota formada: ")
+    cost = calc_cost(tsp, route)
+    
+    return tsp, route, cost
+
+if __name__ == "__main__":
+    start_time = time.time()
+    tsp, route, cost = get_tsp_path_cost()
+    print("Formed route: \n")
     print(route)
-    print("\nCusto total: {}".format(calc_cost(tsp, route)))
+    print("\nTotal Cost: {}".format(cost))
     print("\n---tempo de exec: %s seconds ---" % round((time.time() - start_time), 3))
