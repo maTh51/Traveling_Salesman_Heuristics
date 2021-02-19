@@ -15,6 +15,7 @@ Python implementation of Variable Neighborhood Descent algorithm, using the 2-OP
 Example to compile: `python3 tp2.py ../TSP_instances/EUC_2D/st70.tsp`
 
 The program uses the first better solution than the current in a neighborhood and go to another. To find the best solution in each neighborhood, just comment the line 42 and uncomment the 43 line in tp2.py (this generate better solutions, but some cases take a lot of time)
+<<<<<<< HEAD
 
 ## 3. Metaehuristic:
 
@@ -22,3 +23,5 @@ Python implementation of GRASP metaheuristic, modifying the Clarke-Wright saving
 
 Example to compile: `python3 tp3.py ../TSP_instances/EUC_2D/st70.tsp`
 
+=======
+>>>>>>> 53ea20c37918a573693a16b65bd812ed25b23ad3
