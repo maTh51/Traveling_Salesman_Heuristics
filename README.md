@@ -22,6 +22,3 @@ The program uses the first better solution than the current in a neighborhood an
 Python implementation of GRASP metaheuristic, modifying the Clarke-Wright savings heuristic of part 1 to chose the edge to build the path randomy based on alpha (LRC process), and then using the 2-OPT algorithm of part 2 to find the local maximum. Total of 20 iterations.
 
 Example to compile: `python3 tp3.py ../TSP_instances/EUC_2D/st70.tsp`
-
-=======
->>>>>>> 53ea20c37918a573693a16b65bd812ed25b23ad3
