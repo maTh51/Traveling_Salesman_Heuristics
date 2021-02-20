@@ -99,6 +99,9 @@ def calc_grasp_tsp(tsp, savings, alpha):
             c_e = savings[-1][0] - alpha*(savings[-1][0] + savings[0][0])
         else:
             c_e = savings[-1][0] - alpha*(savings[-1][0] - savings[0][0])
+        
+        if savings[-1][0] < 0:
+            c_e = savings[-5][0]
 
         grasp.clear()
 
@@ -127,7 +130,6 @@ def calc_grasp_tsp(tsp, savings, alpha):
             path.append((chosen[0][2], chosen[0][1]))
 
         del savings[chosen[1]]
-            
 
     for i in range(2, tsp["DIMENSION"]):
         if((i in send_ar) == False):
@@ -169,7 +171,6 @@ def get_grasp_tsp_path_cost(alpha):
     save = calculate_savings(tsp, hub)
     route = calc_grasp_tsp(tsp, save, alpha)
     cost = calc_cost(tsp, route)
-    
     return tsp, route, cost
 
 def calc_cost_bylist(tsp, way):
@@ -203,7 +204,9 @@ def two_opt(tsp, way):
                 new_way = way.copy()
                 new_way[i:j] = way[j-1:i-1:-1]
 
-                if calc_cost_bylist(tsp, new_way) < calc_cost_bylist(tsp, best_way):
+                #para não calcular toda a lista desnecessariamente
+                if ((calc_cost_bylist(tsp, new_way[i-1:i+1]) + calc_cost_bylist(tsp, new_way[j-1:j+1])) < (calc_cost_bylist(tsp, best_way[i-1:i+1]) + calc_cost_bylist(tsp, best_way[j-1:j+1]))):
+                # if calc_cost_bylist(tsp, new_way) < calc_cost_bylist(tsp, best_way):
                     best_way = new_way
                     break
                     # flag_improved = True
@@ -228,19 +231,13 @@ if __name__ == "__main__":
     best = -1 
     cost = -1
     for x in range(10):
-        print(x)
-        tsp, route, cost_aux = get_grasp_tsp_path_cost(0.15)
+        tsp, route, cost_aux = get_grasp_tsp_path_cost(0.05)
         way = [1]
         way = biuld_simple_path(route, way, route[(len(route)-1)][1])
         best_aux = two_opt(tsp, way)
-        # print(best_aux)
-        # print(best)
         cost_aux = calc_cost_bylist(tsp, best_aux)
-        print("novo:")
-        print(cost_aux)
-        print("antigo:")
-        print(cost)
-        if((cost_aux < cost) or (cost == -1)):
+
+        if(((cost_aux < cost) or (cost == -1)) and len(way) == ((len(route)) + 1)):
             cost = cost_aux
             best = best_aux
 
